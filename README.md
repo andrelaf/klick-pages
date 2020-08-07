@@ -37,18 +37,33 @@ Login rota publica
   ○ O password é obrigatório
   ○ Retorna token para ser utilizado no header `authorization bearer` para conseguir consumir as próximas rotas que são privadas.
 
-- **`GET /clients`**: 
+- **`GET /clients?page=1&limit=10`**: 
 Listagem de clientes rota privada
-  ○ Retorna uma lista contendo o identificador, nome, email, data do primeiro cadastro e o nome da(s) tag(s) associada(s) de cada cliente
-  ○ A listagem de clientes é paginada de modo que quem esteja consumindo a API saiba se existem ou não mais páginas
-
+  ○ Retorna uma lista contendo o identificador, nome, email, data do primeiro cadastro e o nome da(s) tag(s) associada(s) de cada cliente.
+  ○ O parâmetro page é obrigatório, representa a página que deseja consultar.
+  ○ O parâmetro limit é obrigatório, representa quantidade de registros por página.
+  ○ A listagem de clientes é paginada de modo que quem esteja consumindo a API saiba se existem ou não mais páginas, por exemplo:
+  
+```json
+  data:[],          -- Conteúdo do retorno.
+  "totalItems": 3,  -- Total de itens.
+  "currentPage": 1, -- Paginá corrente.
+  "pageSize": 10,   -- Tamanho da página.
+  "totalPages": 1,  -- Total de páginas.
+  "startPage": 1,   -- Número página inicial.
+  "endPage": 1,     -- Numero página final.
+  "startIndex": 0,  -- Índice da página inicial.
+  "endIndex": 2,    -- Índice da página final.
+  "pages": [1]      -- Array contento todas as páginas.
+}
+```
 - **`POST /forms`**: 
-Cadastro de formulários rota privada
-  ○ Recebe o nome do formulário e o identificador da tag
-  ○ O nome é obrigatório
-  ○ O identificador da tag é ser um identificador válido
-  ○ Não pode existir mais de um formulário com o mesmo nome
-  ○ Retorna o identificador, nome, data de cadastro e o identificador e o nome da tag associada
+Cadastro de formulários rota privada.
+  ○ Recebe o nome do formulário e o identificador da tag.
+  ○ O nome é obrigatório.
+  ○ O identificador da tag é ser um identificador válido.
+  ○ Não pode existir mais de um formulário com o mesmo nome.
+  ○ Retorna o identificador, nome, data de cadastro e o identificador e o nome da tag associada.
 
 - **`POST /tags/`**: 
 Cadastro de tags rota privada
