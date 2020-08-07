@@ -18,10 +18,12 @@ Acesse o arquivo `ormconfig.json` na raiz do projeto, altere as credencias para 
 ### Instalção de dependencias 
 Clone o projeto para o seu workspace, em seguida, navegue até o diretório raiz do projeto e, execute o seguinte comando `yarn` no seu terminal para instalar todas as dependências.
 
-### Rotas da aplicação
+### Inicializando a aplicação
+Execute no terminal o seguinte comando `yarn dev:server`
 
+### Rotas da aplicação
 - **`POST /clients`**: 
-Cadastro de clientes
+Cadastro de clientes rota publica
   ○ Recebe o nome, email e identificador do formulário
   ○ O nome é obrigatório
   ○ O email é obrigatório
@@ -29,20 +31,27 @@ Cadastro de clientes
   ○ Não pode existir mais de um cliente com o mesmo email
   ○ Retorna o identificador, nome, email, data do cadastro e o identificador do formulário
 
+- **`POST /sessions`**:
+Login rota publica
+  ○ O email é obrigatório 
+  ○ O password é obrigatório
+  ○ Retorna token para ser utilizado no header `authorization bearer` para conseguir consumir as próximas rotas que são privadas.
+
 - **`GET /clients`**: 
-Listagem de clientes
+Listagem de clientes rota privada
   ○ Retorna uma lista contendo o identificador, nome, email, data do primeiro cadastro e o nome da(s) tag(s) associada(s) de cada cliente
   ○ A listagem de clientes é paginada de modo que quem esteja consumindo a API saiba se existem ou não mais páginas
 
 - **`POST /forms`**: 
-Cadastro de formulários
+Cadastro de formulários rota privada
   ○ Recebe o nome do formulário e o identificador da tag
   ○ O nome é obrigatório
   ○ O identificador da tag é ser um identificador válido
   ○ Não pode existir mais de um formulário com o mesmo nome
   ○ Retorna o identificador, nome, data de cadastro e o identificador e o nome da tag associada
 
-- **`POST /tags/`**: Cadastro de tags
+- **`POST /tags/`**: 
+Cadastro de tags rota privada
   ○ Recebe o nome da tag
   ○ O nome é obrigatório
   ○ Não pode existir mais de uma tag com o mesmo nome
