@@ -4,8 +4,8 @@
 
 ## Configuração do banco de dados postgres. 
 Crie o banco de dados com o nome "klick_pages".
-Acesse o arquivo ormconfig.json na raiz do projeto, altere as credencias para acesso ao banco de dados.
-
+Acesse o arquivo `ormconfig.json` na raiz do projeto, altere as credencias para acesso ao banco de dados.
+```json
 {
   "type": "postgres",
   "host": "localhost",
@@ -13,7 +13,7 @@ Acesse o arquivo ormconfig.json na raiz do projeto, altere as credencias para ac
   "username": "postgres",
   "password": "docker",
   "database": "klick_pages",
-
+````
 
 ### Instalção de dependencias 
 Clone o projeto para o seu workspace, em seguida, navegue até o diretório raiz do projeto e, execute o seguinte comando `yarn` no seu terminal para instalar todas as dependências.
