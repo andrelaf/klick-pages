@@ -6,7 +6,7 @@ import Client from '../infra/typeorm/entities/Client';
 import IClientsRepository from '../repositories/IClientsRepository';
 import AppError from '@shared/infra/http/errors/AppErro';
 
-interface Request{
+interface IRequest{
   name: string;
   email: string;
   password: string;
@@ -19,7 +19,7 @@ class  CreateClientsService {
     @inject('ClientsRepository')
     private clientsRepository: IClientsRepository) {}
 
-  public async execute({name, email, password, form_id} : Request) : Promise<Client> {
+  public async execute({name, email, password, form_id} : IRequest) : Promise<Client> {
     const checkClientExists = await this.clientsRepository.findByEmail(email);
 
     if(checkClientExists){

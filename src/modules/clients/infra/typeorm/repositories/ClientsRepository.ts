@@ -3,6 +3,7 @@ import {  getRepository, Repository } from 'typeorm';
 import Client from '../entities/Client';
 import IClientsRepository from '@modules/clients/repositories/IClientsRepository';
 import ICreateClientDto from '@modules/clients/dto/ICreateClientDto';
+import Form from '@modules/forms/infra/typeorm/entities/Form';
 
 class ClientsRepository implements IClientsRepository {
   private ormRepository: Repository<Client>;
@@ -19,12 +20,13 @@ class ClientsRepository implements IClientsRepository {
   public async findAllPaginated(page: number, limit: number): Promise<Client[]> {
     const skippedItems = (page - 1) * limit;
     const clients = await this.ormRepository
-      .createQueryBuilder('client')
+      .createQueryBuilder("client")
+      .select(["client.id", "client.name", "client.email", "client.created_at"])
       .leftJoinAndSelect("client.forms", "form")
-      .leftJoinAndSelect("form.tags", "tag")
-      .orderBy('createdAt', "DESC")
-      .offset(skippedItems)
-      .limit(limit)
+      .leftJoinAndSelect("form.tags", "tag" )
+      .orderBy('client.created_at', "DESC")
+      .skip(skippedItems)
+      .take(limit)
       .getMany()
 
     return clients; 

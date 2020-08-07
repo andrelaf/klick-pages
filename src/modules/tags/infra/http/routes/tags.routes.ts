@@ -4,12 +4,12 @@ import ensureAuthenticated from '@modules/clients/infra/http/middlewares/ensureA
 import TagsController from  '../controllers/TagsController';
  
 const tagsRouter = Router();
-// tagsRouter.use(ensureAuthenticated);
+tagsRouter.use(ensureAuthenticated);
 const tagsController = new TagsController();
 
 tagsRouter.post('/', celebrate({
   [Segments.BODY]: {
-    name: Joi.string().required(),
+    name: Joi.string().min(3).max(12).required()
   }
 }),tagsController.create);
 

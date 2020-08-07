@@ -8,6 +8,7 @@ import {
    JoinColumn } from 'typeorm'
    
 import Tag from '@modules/tags/infra/typeorm/entities/Tag';
+import Client from '@modules/clients/infra/typeorm/entities/Client';
 
 @Entity('forms')
 class Form{
@@ -22,7 +23,8 @@ class Form{
 
   @ManyToOne(() => Tag)
   @JoinColumn({name: 'tag_id'})
-  tag: Tag;
+  tags: Tag[];
+
 
   @CreateDateColumn()
   created_at: Date;

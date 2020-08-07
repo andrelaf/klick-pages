@@ -1,9 +1,9 @@
 
 import { injectable, inject } from 'tsyringe';
 import IClientsRepository from '../repositories/IClientsRepository';
-import IClientsResultPaginatedDto from '../dto/IClientsResultPaginatedDto';
 import IPaginationDto from '@shared/dto/IPaginationDto';
-
+import IPaginationResultDto from '@shared/dto/IPaginationResultDto';
+import Pagination from '@shared/infra/http/Pagination';
 interface Request{
   page: number;
   limit: number;
@@ -15,16 +15,14 @@ class  ListClientsService {
     @inject('ClientsRepository')
     private clientsRepository: IClientsRepository) {}
 
-  public async execute(paginationDto: IPaginationDto) : Promise<IClientsResultPaginatedDto> {
-    const totalCount = await this.clientsRepository.count()
-    const products = await this.clientsRepository.findAllPaginated(paginationDto.page, paginationDto.limit)
+  public async execute(paginationDto: IPaginationDto) : Promise<IPaginationResultDto> {
+    const totalItems = await this.clientsRepository.count()
+    const clients = await this.clientsRepository.findAllPaginated(paginationDto.page, paginationDto.limit)
 
-    return {
-      totalCount,
-      page: paginationDto.page,
-      limit: paginationDto.limit,
-      data: products,
-    }
+    var paginated = new Pagination(totalItems,paginationDto.page,paginationDto.limit)
+    var clientsPaginated = paginated.paginate();
+    clientsPaginated.data = clients;
+    return clientsPaginated;
   }
 }
 

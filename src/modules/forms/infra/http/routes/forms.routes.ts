@@ -4,12 +4,12 @@ import ensureAuthenticated from '@modules/clients/infra/http/middlewares/ensureA
 import FormsController from '../controllers/FormsController';
 
 const formsRouter = Router();
-// formsRouter.use(ensureAuthenticated);
+formsRouter.use(ensureAuthenticated);
 const formsController = new FormsController();
 
 formsRouter.post('/', celebrate({
   [Segments.BODY]: {
-    name: Joi.string().required(),
+    name: Joi.string().min(3).max(100).required(),
     tag_id: Joi.string().uuid().required()
   }
 }),formsController.create);
